@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class LinearEquationRunner {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        /*System.out.println("Welcome! Please enter a coordinate point (in the form of (x, y)).");
+        System.out.println("Welcome! Please enter a coordinate point (in the form of (x, y)).");
         String firstCoord = scan.nextLine();
         System.out.println("Enter the second coordinate point (in the form of (x, y))!");
         String secondCoord = scan.nextLine();
@@ -15,13 +15,10 @@ public class LinearEquationRunner {
 
         LinearEquation coords = new LinearEquation(x1,y1,x2,y2);
 
-        System.out.println(x1);
-        System.out.println(y1);
-        System.out.println(x2);
-        System.out.println(y2);*/
-
-        System.out.println(Math.round(5.9);
-
+        System.out.println(coords.lineInfo());
+        System.out.println("Enter a x value:");
+        double xval = scan.nextDouble()        ;
+        System.out.println("The coords for your x value are " + coords.coordinateForX(xval));
     }
 
 }

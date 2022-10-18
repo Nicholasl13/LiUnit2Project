@@ -22,7 +22,8 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
 /* Calculates and returns distance between (x1, y1) and (x2, y2), rounded to
    the nearest hundredth */
         public double distance() {
-                return Math.sqrt((Math.pow(x2-x1,2)) + (Math.pow(y2-y1,2)));
+                //returns distance between the two points using math formulas
+                return roundedToHundredth(Math.sqrt((Math.pow(x2-x1,2)) + (Math.pow(y2-y1,2))));
         }
 
 
@@ -30,7 +31,8 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
         /* Calculates and returns the y-intercept of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
         public double yIntercept() {
-                return (y1 - (slope() * x1));
+                //returns the y intercept using the equation (y1) / (slope*x1) = b
+                return roundedToHundredth(y1 - (slope() * x1));
         }
 
 
@@ -38,7 +40,8 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
         /* Calculates and returns the slope of the line between (x1, y1) and
            (x2, y2), rounded to the nearest hundredth */
         public double slope() {
-                return (y2-y1)/(x2-x1);
+                //returns the slope (y2-y1)/(x2-x1) and rounded
+                return roundedToHundredth((double) (y2-y1)/(x2-x1));
         }
 
 
@@ -68,7 +71,70 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
                    subtraction!
          */
         public String equation() {
-                return "";
+                //finds numerator and denominator of slope
+                int numerator = y2 - y1;
+                int denominator = x2 - x1;
+                double b = yIntercept();
+                String equation = "";
+
+                //making sure that the slope is printed as negative or positive without any double negs or neg in demoninator
+                if (numerator < 0 && denominator < 0) {
+                        numerator = Math.abs(numerator);
+                        denominator = Math.abs(denominator);
+                }
+                if (denominator < 0) {
+                        denominator = Math.abs(denominator);
+                        numerator *= -1;
+                }
+
+                //vertical line
+                if (numerator == 0) {
+                        return "y = " + y1;
+                }
+
+                //making sure simplified
+                if (numerator == denominator) {
+                        if (b < 0) {
+                                b = Math.abs(b);
+                                return "y = x - " + b;
+                        } else if (b == 0) {
+                                return "y = x";
+                        } else if (b > 0) {
+                                return "y = x + " + b;
+                        }
+                } else if ((numerator/denominator) == -1) {
+                        if (b < 0) {
+                                b = Math.abs(b);
+                                return "y = -x - " + b;
+                        } else if (b == 0) {
+                                return "y = -x";
+                        } else if (b > 0) {
+                                return "y = -x + " + b;
+                        }
+                }
+
+                //printing out equation
+                if ((double) numerator/denominator == (numerator/denominator)) {
+                        if (b < 0) {
+                                b = Math.abs(b);
+                                equation = "y = " + (numerator/denominator) + "x - " + b;
+                        } else if (b == 0) {
+                                equation = "y = " + (numerator/denominator) + "x ";
+                        } else if (b > 0) {
+                                equation = "y = " + (numerator/denominator) + "x + " + b;
+                        }
+                } else {
+                        if (b < 0) {
+                                b = Math.abs(b);
+                                equation = "y = " + numerator + "/" + denominator + "x - " + b;
+                        } else if (b == 0) {
+                                equation = "y = " + numerator + "/" + denominator + "x";
+                        } else if (b > 0) {
+                                equation = "y = " + numerator + "/" + denominator + "x + " + b;
+                        }
+                }
+
+                return equation;
         }
 
 
@@ -78,8 +144,9 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
         /* Returns a String of the coordinate point on the line that has the given x value, with
            both x and y coordinates as decimals to the nearest hundredth, e.g (-5.0, 6.75) */
         public String coordinateForX(double xValue) {
-                double yValue = (xValue * slope()) + yIntercept();
-                return "(" + xValue + ", " + yValue + ")";
+                //finds coords of next points using the provide point and rounds x and y
+                double yValue = roundedToHundredth((xValue * slope()) + yIntercept());
+                return "(" + roundedToHundredth(xValue) + ", " + yValue + ")";
         }
 
 
@@ -92,7 +159,8 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
             HINT:  the Math.round method can help with this!
          */
         public double roundedToHundredth(double toRound) {
-                return 0;
+                //rounds to nearest hundredth using math.round and *100 + /100
+                return (double) Math.round(toRound * 100) / 100;
         }
 
 
@@ -110,7 +178,18 @@ public LinearEquation(int x1, int y1, int x2, int y2) {
 
           */
         public String lineInfo() {
-                return "";
+                //prints all the variables with the information on it
+                if (x1 == x2) {
+                        return "These points are on a vertical line x = " + x1;
+                } else {
+                        String points = "Your cooridnate points are " + "(" + x1 + ", " + y1 + ")" + " and " + "(" + x2 + ", " + y2 + ")";
+                        String equation = "The equation of these two points is " + equation();
+                        String slope = "The slope is " + slope();
+                        String yintercept = "The y intercept is " + yIntercept();
+                        String distance = "The distance between the two points are " + distance();
+
+                        return points + "\n" + equation + "\n" + slope + "\n" + yintercept + "\n" + distance;
+                }
         }
 }
 
